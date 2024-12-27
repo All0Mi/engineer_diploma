@@ -28,7 +28,7 @@
 - [x] Zaimplementować próg detekcji:
   - Uwzględnić szum na podstawie rozkładu Rayleigha.
   - Funkcja określająca, czy punkt jest wykryty (np. `isDetected.m`).
-- [ ] Dodać funkcjonalność symulacji błędów pomiarowych:
+- [x] Dodać funkcjonalność symulacji błędów pomiarowych:
   - Szum procesowy i pomiarowy (parametryzowany sigma).
 
 ---
