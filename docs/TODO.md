@@ -10,22 +10,22 @@
 ---
 
 ## 2. Modelowanie trajektorii obiektów
-- [ ] Zdefiniować przestrzeń symulacyjną:
+- [x] Zdefiniować przestrzeń symulacyjną:
   - Parametry obszaru (np. 200x200 km).
   - Stałe modelowe (próg detekcji, zakres szumów, etc.).
-- [ ] Stworzyć funkcję generującą trajektorie:
+- [x] Stworzyć funkcję generującą trajektorie:
   - `generateTrajectory.m`: generuje trajektorie obiektów w przestrzeni.
   - Uwzględnić różne typy ruchu (np. jednostajny, zmienny).
-- [ ] Zaimplementować losowe generowanie pozycji i prędkości obiektów:
+- [x] Zaimplementować losowe generowanie pozycji i prędkości obiektów:
   - Funkcja losująca prędkości i kierunki.
-- [ ] Dodać symulację fałszywych trajektorii wynikających z szumów.
+- [x] Dodać symulację fałszywych trajektorii wynikających z szumów.
 
 ---
 
 ## 3. Symulacja działania radaru
-- [ ] Stworzyć model symulacyjny radaru:
+- [x] Stworzyć model symulacyjny radaru:
   - `simulateRadar.m`: symuluje działanie radaru, generuje wykrycia.
-- [ ] Zaimplementować próg detekcji:
+- [x] Zaimplementować próg detekcji:
   - Uwzględnić szum na podstawie rozkładu Rayleigha.
   - Funkcja określająca, czy punkt jest wykryty (np. `isDetected.m`).
 - [ ] Dodać funkcjonalność symulacji błędów pomiarowych:
