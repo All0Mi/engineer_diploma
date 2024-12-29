@@ -18,6 +18,8 @@
   - Uwzględnić różne typy ruchu (np. jednostajny, zmienny).
 - [x] Zaimplementować losowe generowanie pozycji i prędkości obiektów:
   - Funkcja losująca prędkości i kierunki.
+  - Funkcja losująca RCS dla fałszywych obiektów (rozkład Rayleigha).
+  - Funkcja losująca RCS dla prawdziwych obiektów (na podstawie Pfa)
 - [x] Dodać symulację fałszywych trajektorii wynikających z szumów.
 
 ---
@@ -34,12 +36,10 @@
 ---
 
 ## 4. Analiza trajektorii i filtrowanie
-- [ ] Zaimplementować filtrację danych:
-  - Funkcja `kalmanFilter.m` do przetwarzania trajektorii.
-  - Uwzględnić szum procesowy i szum pomiarowy.
 - [ ] Stworzyć funkcję analizy trajektorii:
-  - `analyzeTrajectory.m`: sprawdza, czy punkty należą do jednej trajektorii.
+  - `mahalonobisTrajectories.m`: sprawdza, czy punkty należą do jednej trajektorii. /TODO, only draft
   - Wykorzystać odległość Mahalanobisa do obliczeń wiarygodności.
+  - połączyć punkty w trajektorie (metoda 3 z 5)
 - [ ] Dodać wizualizację trajektorii:
   - Wyświetlić wykrycia na wykresie (prawdziwe i fałszywe trajektorie różnymi kolorami).
 

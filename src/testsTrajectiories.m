@@ -61,3 +61,42 @@ xlabel('X [km]');
 ylabel('Y [km]');
 legend;
 hold off;
+
+%% MAHALONOBIS
+%%TODO
+% Parametry funkcji dopasowania trajektorii
+params.matchThreshold = 55; % Przykładowy próg dopasowania, do dostosowania w zależności od aplikacji
+params.noiseStd = [0.5, 0.5]; % Standardowe odchylenie szumu (500m w każdej osi)
+
+% Wywołanie funkcji dopasowania trajektorii
+matchedTrajectories = mahalonobisTrajectories(detectedPoints, params);
+
+% Wizualizacja dopasowanych trajektorii
+figure;
+hold on;
+scatter(radar.transmitter(1), radar.transmitter(2), 100, 'bs', 'filled', 'DisplayName', 'Nadajnik');
+scatter(radar.receiver(1), radar.receiver(2), 100, 'ms', 'filled', 'DisplayName', 'Odbiornik');
+
+% Wykres trajektorii z szumem
+if ~isempty(noisyTrajectories)
+    scatter(noisyTrajectories(:, 1), noisyTrajectories(:, 2), 'g+', 'DisplayName', 'Trajektorie zaszumione');
+end
+if ~isempty(noisyFalsePoints)
+    scatter(noisyFalsePoints(:, 1), noisyFalsePoints(:, 2), 'k+', 'DisplayName', 'Fałszywe punkty zaszumione');
+end
+
+% Wykres trajektorii wykrytych przez radar (przed dodaniem szumu)
+if ~isempty(detectedPoints.trajectories)
+    scatter(detectedPoints.trajectories(:, 1), detectedPoints.trajectories(:, 2), 'ro', 'DisplayName', 'Trajektorie wykryte');
+end
+
+% Dodanie dopasowanych trajektorii do wykresu
+if ~isempty(matchedTrajectories)
+    scatter(matchedTrajectories(:, 1), matchedTrajectories(:, 2), 'y*', 'DisplayName', 'Dopasowane trajektorie');
+end
+
+title('Wykrycia radarowe z dopasowanymi trajektoriami');
+xlabel('X [km]');
+ylabel('Y [km]');
+legend;
+hold off;
