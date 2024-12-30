@@ -62,40 +62,53 @@ ylabel('Y [km]');
 legend;
 hold off;
 
-%% MAHALONOBIS
-%%TODO
-% Parametry funkcji dopasowania trajektorii
-params.matchThreshold = 55; % Przykładowy próg dopasowania, do dostosowania w zależności od aplikacji
-params.noiseStd = [0.5, 0.5]; % Standardowe odchylenie szumu (500m w każdej osi)
+%% Po nałożeniu RCS:
+figure;
+hold on;
+for obj = 1:params.numObjects
+    plot(1:params.timeSteps, squeeze(trajectories(obj, :, 3)), '-o');
+    %disp(squeeze(trajectories(obj, :, 3)));
+end
+title('RCS prawdziwych obiektów w czasie');
+xlabel('Czas [krok symulacji]');
+ylabel('RCS');
+hold off;
 
-% Wywołanie funkcji dopasowania trajektorii
-matchedTrajectories = mahalonobisTrajectories(detectedPoints, params);
+figure;
+hold on;
+for obj = 1:params.numObjects
+    plot(1:params.timeSteps, squeeze(falsePoints(obj, :, 3)), '-o');
+    %disp(squeeze(trajectories(obj, :, 3)));
+end
+title('RCS fałszwych obiektów w czasie');
+xlabel('Czas [krok symulacji]');
+ylabel('RCS');
+hold off;
 
-% Wizualizacja dopasowanych trajektorii
+%% Filtracja i analiza trajektorii za pomocą przestrzeni Mahalonobisa
+
+% Połączenie wszystkich wykryć w jedną macierz
+allDetections = [noisyTrajectories; noisyFalsePoints];
+
+% Ustawienie parametru odległości Mahalanobisa
+mahalDistThreshold = 5; % Przykładowa wartość progowa
+
+% Testowanie funkcji grupowania punktów w trajektorie
+groupedTrajectories = mahalonobisTrajectories(allDetections, mahalDistThreshold);
+
+% Wizualizacja wyników grupowania
 figure;
 hold on;
 scatter(radar.transmitter(1), radar.transmitter(2), 100, 'bs', 'filled', 'DisplayName', 'Nadajnik');
 scatter(radar.receiver(1), radar.receiver(2), 100, 'ms', 'filled', 'DisplayName', 'Odbiornik');
 
-% Wykres trajektorii z szumem
-if ~isempty(noisyTrajectories)
-    scatter(noisyTrajectories(:, 1), noisyTrajectories(:, 2), 'g+', 'DisplayName', 'Trajektorie zaszumione');
-end
-if ~isempty(noisyFalsePoints)
-    scatter(noisyFalsePoints(:, 1), noisyFalsePoints(:, 2), 'k+', 'DisplayName', 'Fałszywe punkty zaszumione');
+colors = lines(length(groupedTrajectories)); % Generowanie różnych kolorów
+for i = 1:length(groupedTrajectories)
+    traj = groupedTrajectories{i};
+    plot(traj(:, 1), traj(:, 2), '-o', 'Color', colors(i, :), 'DisplayName', sprintf('Trajektoria %d', i));
 end
 
-% Wykres trajektorii wykrytych przez radar (przed dodaniem szumu)
-if ~isempty(detectedPoints.trajectories)
-    scatter(detectedPoints.trajectories(:, 1), detectedPoints.trajectories(:, 2), 'ro', 'DisplayName', 'Trajektorie wykryte');
-end
-
-% Dodanie dopasowanych trajektorii do wykresu
-if ~isempty(matchedTrajectories)
-    scatter(matchedTrajectories(:, 1), matchedTrajectories(:, 2), 'y*', 'DisplayName', 'Dopasowane trajektorie');
-end
-
-title('Wykrycia radarowe z dopasowanymi trajektoriami');
+title('Grupowanie punktów w trajektorie');
 xlabel('X [km]');
 ylabel('Y [km]');
 legend;

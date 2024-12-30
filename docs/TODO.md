@@ -1,7 +1,7 @@
 # TODO
 
 ## 1. Przygotowanie środowiska projektu
-- [x] Utworzyć strukturę katalogów:
+- [x] Utworzenie struktury katalogów:
   - `/src` - kod źródłowy,
   - `/data` - pliki danych wejściowych/wyjściowych,
   - `/docs` - dokumentacja,
@@ -10,83 +10,83 @@
 ---
 
 ## 2. Modelowanie trajektorii obiektów
-- [x] Zdefiniować przestrzeń symulacyjną:
+- [x] Zdefiniowanie przestrzeni symulacyjnej:
   - Parametry obszaru (np. 200x200 km).
-  - Stałe modelowe (próg detekcji, zakres szumów, etc.).
-- [x] Stworzyć funkcję generującą trajektorie:
+  - Stałe modelowe (próg detekcji, zakres szumów itp.).
+- [x] Stworzenie funkcji generującej trajektorie:
   - `generateTrajectory.m`: generuje trajektorie obiektów w przestrzeni.
-  - Uwzględnić różne typy ruchu (np. jednostajny, zmienny).
-- [x] Zaimplementować losowe generowanie pozycji i prędkości obiektów:
+  - Uwzględnienie różnych typów ruchu (np. jednostajny, zmienny).
+- [x] Implementacja losowego generowania pozycji i prędkości obiektów:
   - Funkcja losująca prędkości i kierunki.
   - Funkcja losująca RCS dla fałszywych obiektów (rozkład Rayleigha).
-  - Funkcja losująca RCS dla prawdziwych obiektów (na podstawie Pfa)
-- [x] Dodać symulację fałszywych trajektorii wynikających z szumów.
+  - Funkcja losująca RCS dla prawdziwych obiektów (na podstawie Pfa).
+- [x] Dodanie symulacji fałszywych trajektorii wynikających z szumów.
 
 ---
 
 ## 3. Symulacja działania radaru
-- [x] Stworzyć model symulacyjny radaru:
+- [x] Stworzenie modelu symulacyjnego radaru:
   - `simulateRadar.m`: symuluje działanie radaru, generuje wykrycia.
-- [x] Zaimplementować próg detekcji:
-  - Uwzględnić szum na podstawie rozkładu Rayleigha.
+- [x] Implementacja progu detekcji:
+  - Uwzględnienie szumu na podstawie rozkładu Rayleigha.
   - Funkcja określająca, czy punkt jest wykryty (np. `isDetected.m`).
-- [x] Dodać funkcjonalność symulacji błędów pomiarowych:
+- [x] Dodanie funkcjonalności symulacji błędów pomiarowych:
   - Szum procesowy i pomiarowy (parametryzowany sigma).
 
 ---
 
 ## 4. Analiza trajektorii i filtrowanie
-- [ ] Stworzyć funkcję analizy trajektorii:
-  - `mahalonobisTrajectories.m`: sprawdza, czy punkty należą do jednej trajektorii. /TODO, only draft
-  - Wykorzystać odległość Mahalanobisa do obliczeń wiarygodności.
-  - połączyć punkty w trajektorie (metoda 3 z 5)
-- [ ] Dodać wizualizację trajektorii:
-  - Wyświetlić wykrycia na wykresie (prawdziwe i fałszywe trajektorie różnymi kolorami).
+- [ ] Stworzenie funkcji analizy trajektorii:
+  - `mahalonobisTrajectories.m`: sprawdza, czy punkty należą do jednej trajektorii.
+  - Wykorzystanie odległości Mahalanobisa do obliczeń wiarygodności.
+  - Połączenie punktów w trajektorie (metoda 3 z 5).
+- [ ] Dodanie wizualizacji trajektorii:
+  - Wyświetlenie wykryć na wykresie (prawdziwe i fałszywe trajektorie różnymi kolorami).
 
 ---
 
 ## 5. Generowanie danych do trenowania sieci neuronowej
-- [ ] Stworzyć zbiór danych:
-  - Generować trajektorie prawdziwe i fałszywe w różnych warunkach (różne poziomy szumów, różne progi detekcji).
-  - Zapisz dane do plików w formacie kompatybilnym z MATLAB-em (np. `.mat`).
-- [ ] Oznaczyć dane:
-  - Oznaczyć dane jako prawdziwe lub fałszywe na podstawie wyników symulacji.
-- [ ] Przygotować funkcję eksportującą dane:
+- [ ] Utworzenie zbioru danych:
+  - Generowanie trajektorii prawdziwych i fałszywych w różnych warunkach (różne poziomy szumów, różne progi detekcji).
+  - Zapis danych do plików w formacie kompatybilnym z MATLAB-em (np. `.mat`).
+- [ ] Oznaczenie danych:
+  - Oznaczenie danych jako prawdziwe lub fałszywe na podstawie wyników symulacji.
+- [ ] Przygotowanie funkcji eksportującej dane:
   - `exportData.m`: zapisuje trajektorie i metadane do plików.
 
 ---
 
 ## 6. Implementacja sieci neuronowej
-- [ ] Zaimportować toolbox do uczenia maszynowego.
-- [ ] Stworzyć i trenować sieć:
+- [ ] Import toolboxa do uczenia maszynowego.
+- [ ] Stworzenie i trenowanie sieci:
   - Funkcja `trainNeuralNet.m` do trenowania sieci na wygenerowanych danych.
-  - Testować różne konfiguracje sieci (np. liczbę warstw, neurony, funkcje aktywacji).
-- [ ] Zaimplementować funkcję walidacji:
+  - Testowanie różnych konfiguracji sieci (np. liczba warstw, neurony, funkcje aktywacji).
+- [ ] Implementacja funkcji walidacji:
   - `validateModel.m`: ocenia skuteczność sieci na zbiorze testowym.
 
 ---
 
 ## 7. Walidacja wyników
-- [ ] Przeprowadzić testy symulacyjne:
-  - Weryfikować poprawność trajektorii na różnych poziomach szumu i progów detekcji.
-- [ ] Analizować skuteczność algorytmu detekcji:
-  - Obliczyć wskaźniki dokładności (precision, recall, etc.).
-- [ ] Wizualizować wyniki:
-  - Tworzyć wykresy porównawcze dla różnych scenariuszy.
+- [ ] Przeprowadzenie testów symulacyjnych:
+  - Weryfikacja poprawności trajektorii na różnych poziomach szumu i progów detekcji.
+- [ ] Analiza skuteczności algorytmu detekcji:
+  - Obliczenie wskaźników dokładności (precision, recall itp.).
+- [ ] Wizualizacja wyników:
+  - Tworzenie wykresów porównawczych dla różnych scenariuszy.
 
 ---
 
 ## 8. Dokumentacja i przygotowanie wyników
-- [ ] Udokumentować kod:
-  - Dodać komentarze do wszystkich funkcji.
-- [ ] Przygotować raport z wynikami:
-  - Opisać wyniki symulacji, wnioski oraz skuteczność sieci neuronowej.
-- [ ] Przygotować prezentację projektu:
+- [ ] Udokumentowanie kodu:
+  - Dodanie komentarzy do wszystkich funkcji.
+- [ ] Przygotowanie raportu z wynikami:
+  - Opis wyników symulacji, wnioski oraz skuteczność sieci neuronowej.
+- [ ] Przygotowanie prezentacji projektu:
   - Slajdy z wynikami i procesem implementacji.
 
 ---
 
 ## 9. Iteracyjne poprawki
-- [ ] Poprawić błędy znalezione podczas testów.
-- [ ] Optymalizować kod pod kątem wydajności.
-- [ ] Konsultować się z promotorem i wdrażać jego uwagi.
+- [ ] Poprawa błędów znalezionych podczas testów.
+- [ ] Optymalizacja kodu pod kątem wydajności.
+- [ ] Konsultacje z promotorem i wdrażanie jego uwag.
