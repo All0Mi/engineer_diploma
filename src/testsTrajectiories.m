@@ -1,12 +1,12 @@
 clear all;
 [space,params] = initializeSimulation();
-trajectories = generateTrajectory(params, space);
+detectedTrajectories = generateTrajectory(params, space);
 falsePoints = generateFalsePoints(params, space);
 
 %% wstępna wizualizacja
 hold on;
 for obj = 1:params.numObjects
-    plot(squeeze(trajectories(obj, :, 1)), squeeze(trajectories(obj, :, 2)), '-o');
+    plot(squeeze(detectedTrajectories(obj, :, 1)), squeeze(detectedTrajectories(obj, :, 2)), '-o');
 end
 scatter(falsePoints(:,1,1), falsePoints(:,1,2), 'r*');
 title('Trajektorie i punkty fałszywe');
@@ -16,7 +16,7 @@ hold off;
 
 %% Test bistatycznego radaru - wizualizacja tylko wykryć
 radar = initializeRadar();
-detectedPoints = radarDetection(trajectories, falsePoints, radar, params);
+detectedPoints = radarDetection(detectedTrajectories, falsePoints, radar, params);
 
 figure;
 hold on;
@@ -66,7 +66,7 @@ hold off;
 figure;
 hold on;
 for obj = 1:params.numObjects
-    plot(1:params.timeSteps, squeeze(trajectories(obj, :, 3)), '-o');
+    plot(1:params.timeSteps, squeeze(detectedTrajectories(obj, :, 3)), '-o');
     %disp(squeeze(trajectories(obj, :, 3)));
 end
 title('RCS prawdziwych obiektów w czasie');
@@ -85,31 +85,27 @@ xlabel('Czas [krok symulacji]');
 ylabel('RCS');
 hold off;
 
-%% Filtracja i analiza trajektorii za pomocą przestrzeni Mahalonobisa
-
-% Połączenie wszystkich wykryć w jedną macierz
-allDetections = [noisyTrajectories; noisyFalsePoints];
-
-% Ustawienie parametru odległości Mahalanobisa
-mahalDistThreshold = 5; % Przykładowa wartość progowa
-
-% Testowanie funkcji grupowania punktów w trajektorie
-groupedTrajectories = mahalonobisTrajectories(allDetections, mahalDistThreshold);
-
-% Wizualizacja wyników grupowania
-figure;
-hold on;
-scatter(radar.transmitter(1), radar.transmitter(2), 100, 'bs', 'filled', 'DisplayName', 'Nadajnik');
-scatter(radar.receiver(1), radar.receiver(2), 100, 'ms', 'filled', 'DisplayName', 'Odbiornik');
-
-colors = lines(length(groupedTrajectories)); % Generowanie różnych kolorów
-for i = 1:length(groupedTrajectories)
-    traj = groupedTrajectories{i};
-    plot(traj(:, 1), traj(:, 2), '-o', 'Color', colors(i, :), 'DisplayName', sprintf('Trajektoria %d', i));
+%% Filtracja i analiza trajektorii za pomocą przestrzeni Mahalanobisa + metoda 3 z 5
+points = [];
+if ~isempty(noisyTrajectories) && ~isempty(noisyFalsePoints)
+    points = [noisyTrajectories; noisyFalsePoints]; % Łączenie macierzy
 end
 
-title('Grupowanie punktów w trajektorie');
+threshold = 10; % Próg Mahalanobisa
+detectedTrajectories = mahalanobisTrajectories(detectedPoints, threshold);
+
+figure;
+hold on;
+colors = lines(length(detectedTrajectories)); 
+for i = 1:length(detectedTrajectories)
+    traj = detectedTrajectories{i};
+    plot(traj(:, 1), traj(:, 2), '-o', 'Color', colors(i, :), 'LineWidth', 1.5, ...
+        'DisplayName', ['Trajektoria ' num2str(i)]);
+end
+% Rysowanie wszystkich wykryć:
+scatter(detectedPoints(:, 1), detectedPoints(:, 2), 50, 'kx', 'DisplayName', 'Wykrycia');
+title('Analiza trajektorii z Mahalanobisem');
 xlabel('X [km]');
 ylabel('Y [km]');
-legend;
+grid on;
 hold off;

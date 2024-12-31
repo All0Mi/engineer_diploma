@@ -36,7 +36,7 @@
 ---
 
 ## 4. Analiza trajektorii i filtrowanie
-- [ ] Stworzenie funkcji analizy trajektorii:
+- [x] Stworzenie funkcji analizy trajektorii:
   - `mahalonobisTrajectories.m`: sprawdza, czy punkty należą do jednej trajektorii.
   - Wykorzystanie odległości Mahalanobisa do obliczeń wiarygodności.
   - Połączenie punktów w trajektorie (metoda 3 z 5).
