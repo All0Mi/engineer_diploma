@@ -91,8 +91,8 @@ if ~isempty(noisyTrajectories) && ~isempty(noisyFalsePoints)
     points = [noisyTrajectories; noisyFalsePoints]; % Łączenie macierzy
 end
 
-threshold = 10; % Próg Mahalanobisa
-detectedTrajectories = mahalanobisTrajectories(detectedPoints, threshold);
+threshold = 5; % Próg Mahalanobisa
+detectedTrajectories = mahalanobisTrajectories(points, threshold);
 
 figure;
 hold on;
@@ -103,9 +103,14 @@ for i = 1:length(detectedTrajectories)
         'DisplayName', ['Trajektoria ' num2str(i)]);
 end
 % Rysowanie wszystkich wykryć:
-scatter(detectedPoints(:, 1), detectedPoints(:, 2), 50, 'kx', 'DisplayName', 'Wykrycia');
+scatter(points(:, 1), points(:, 2), 50, 'kx', 'DisplayName', 'Wykrycia');
 title('Analiza trajektorii z Mahalanobisem');
 xlabel('X [km]');
 ylabel('Y [km]');
 grid on;
 hold off;
+
+%% Wyświetlenie statystyk w terminalu
+disp('--- Statystyki trajektorii ---');
+disp(['Liczba prawdziwych trajektorii (wygenerowanych): ', num2str(params.numObjects)]);
+disp(['Liczba trajektorii stworzonych przez przestrzeń Mahalanobisa: ', num2str(length(detectedTrajectories))]);

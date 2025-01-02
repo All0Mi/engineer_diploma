@@ -7,7 +7,7 @@ function [space, params] = initializeSimulation()
     %stałe symulacyjne, parametry
     params.numObjects = 10;
     params.numFalsePoints = 50;
-    params.timeSteps = 100;
+    params.timeSteps = 5;
     params.speedRange = [0, 50];    % km/h
     params.P_FA = 1e-3; % prawdopodobieństwo fałszywego alarmu
 

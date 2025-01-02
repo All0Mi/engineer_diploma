@@ -40,7 +40,7 @@ function trajectories = mahalanobisTrajectories(points, threshold)
 
             % Dodanie punktu do trajektorii, jeśli spełnia warunek
             if mahalDistance <= threshold
-                trajectory = [trajectory; points(j, :)]; % Dodanie punktu
+                trajectory = [trajectory; points(j, :)];
                 assigned(j) = true;
 
                 % Przerwanie, jeśli osiągnięto maksymalną liczbę punktów

@@ -40,7 +40,7 @@
   - `mahalonobisTrajectories.m`: sprawdza, czy punkty należą do jednej trajektorii.
   - Wykorzystanie odległości Mahalanobisa do obliczeń wiarygodności.
   - Połączenie punktów w trajektorie (metoda 3 z 5).
-- [ ] Dodanie wizualizacji trajektorii:
+- [x] Dodanie wizualizacji trajektorii:
   - Wyświetlenie wykryć na wykresie (prawdziwe i fałszywe trajektorie różnymi kolorami).
 
 ---
